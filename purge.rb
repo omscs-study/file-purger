@@ -1,10 +1,15 @@
 #!/usr/bin/env ruby
-require 'net/http'
 require 'json'
+require 'logger'
+require 'net/http'
 require 'uri'
 
 @token = ENV['SLACK_TOKEN']
 @days  = 10
+
+def log
+  Logger.new(STDOUT)
+end
 
 def list_files
   params = {
@@ -27,13 +32,15 @@ def delete_files(file_ids)
     uri = URI.parse('https://slack.com/api/files.delete')
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get_response(uri)
-    p "#{file_id}: #{JSON.parse(response.body)['ok']}"
+    log.info "#{file_id}: #{JSON.parse(response.body)['ok']}"
   end
 end
 
-raise "No SLACK_TOKEN specified" unless @token
-p 'Deleting files...'
-files = list_files
-file_ids = files.map { |f| f['id'] }
-delete_files(file_ids)
-p 'Done!'
+if __FILE__ == $0
+  raise "No SLACK_TOKEN specified" unless @token
+  log.info 'Deleting files...'
+  files = list_files
+  file_ids = files.map { |f| f['id'] }
+  delete_files(file_ids)
+  log.info 'Done!'
+end
