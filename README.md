@@ -6,9 +6,18 @@ File Purger
 ## General
 
 This script purges all shared files in Slack older than a certain time interval.
-It's meant to be used with [Heroku
-Scheduler][heroku-scheduler], but can be easily
-adapted into other schedulers, e.g. `cron`.
+It's meant to be used with [Heroku Scheduler][heroku-scheduler], but can be
+easily adapted into other schedulers, e.g. `cron`.
+
+## Deployment
+
+One-button deployment to [Heroku](https://heroku.com):
+
+[![Deploy][deploy-button]](https://heroku.com/deploy)
+
+Or, host on your own server. You'll need [Ruby](https://www.ruby-lang.org) along
+with the dependencies listed in the `Gemfile`, i.e. run `bundle install` if it's
+Dockerized.
 
 ## Configuration with Environment Variables
 
@@ -19,5 +28,6 @@ adapted into other schedulers, e.g. `cron`.
 | `ADMIN_CHANNEL`   | Channel to notify if there are any errors                |
 | `GENERAL_CHANNEL` | Channel to notify when the script is run                 |
 
+[deploy-button]: https://www.herokucdn.com/deploy/button.svg
 [heroku-scheduler]: https://elements.heroku.com/addons/scheduler
 [legacy-tokens]: https://api.slack.com/custom-integrations/legacy-tokens
