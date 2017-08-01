@@ -25,7 +25,7 @@ to run the command, `bundle exec ruby purge.rb`.
 
 | Variable          | Description                                              |
 |-------------------|----------------------------------------------------------|
-| `SLACK_TOKEN`     | *Required*: [Slack (legacy) API token][legacy-tokens]    |
+| `SLACK_TOKEN`     | [Slack (legacy) API token][legacy-tokens] **(Required)** |
 | `DAYS_TO_KEEP`    | Threshold days to keep files, _default: 10_              |
 | `ADMIN_CHANNEL`   | Channel to notify if there are any errors                |
 | `GENERAL_CHANNEL` | Channel to notify when the script is run                 |
