@@ -16,8 +16,10 @@ One-button deployment to [Heroku](https://heroku.com):
 [![Deploy][deploy-button]](https://heroku.com/deploy)
 
 Or, host on your own server. You'll need [Ruby](https://www.ruby-lang.org) along
-with the dependencies listed in the `Gemfile`, i.e. run `bundle install` if it's
-Dockerized.
+with the dependencies listed in the `Gemfile`, _i.e. run_ `bundle install`
+
+Once deployed, configure your scheduler (at your desired interval, _e.g. daily_)
+to run the command, `bundle exec ruby purge.rb`.
 
 ## Configuration with Environment Variables
 
