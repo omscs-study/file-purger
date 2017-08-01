@@ -53,14 +53,13 @@ end
 def call
   raise 'No SLACK_TOKEN specified' unless @token
   log.info 'Deleting files...'
-  post_message 'Starting file purge...'
   file_ids = list_files.map { |f| f['id'] }
   deleted_file_ids = delete_files(file_ids)
   log.info 'Done!'
-  post_message "#{deleted_file_ids.length} files purged!", icon_emoji: ':smile:'
+  post_message "Deleted #{deleted_file_ids.length} files _(shared more than #{@days} days ago)_", channel: '#general', icon_emoji: ':smile:' if deleted_file_ids.length > 0
 rescue => exception
+  post_message "File purger failed: #{exception.message}", channel: '#admins', icon_emoji: ':scream:'
   raise exception
-  post_message "File purger failed: #{exception.message}", icon_emoji: ':scream:'
 end
 
 if __FILE__ == $0
