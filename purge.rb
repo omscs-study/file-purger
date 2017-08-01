@@ -4,8 +4,10 @@ require 'logger'
 require 'net/http'
 require 'uri'
 
-@token = ENV['SLACK_TOKEN']
-@days  = 10
+@token   = ENV['SLACK_TOKEN']
+@days    = ENV.fetch('DAYS_TO_KEEP', 10).to_i
+@admin   = ENV['ADMIN_CHANNEL']
+@general = ENV['GENERAL_CHANNEL']
 
 def log
   Logger.new(STDOUT)
@@ -38,10 +40,11 @@ def delete_files(file_ids)
 end
 
 def post_message(message, options = {})
+  return unless options[:channel]
   params = {
     token: @token,
     text: message,
-    channel: '#admins',
+    channel: options[:channel],
     as_user: false,
     username: 'file-purger'
   }.merge(options)
@@ -56,9 +59,9 @@ def call
   file_ids = list_files.map { |f| f['id'] }
   deleted_file_ids = delete_files(file_ids)
   log.info 'Done!'
-  post_message "Deleted #{deleted_file_ids.length} files _(shared more than #{@days} days ago)_", channel: '#general', icon_emoji: ':smile:' if deleted_file_ids.length > 0
+  post_message "Deleted #{deleted_file_ids.length} files _(shared more than #{@days} days ago)_", channel: @general, icon_emoji: ':smile:' if deleted_file_ids.length > 0
 rescue => exception
-  post_message "File purger failed: #{exception.message}", channel: '#admins', icon_emoji: ':scream:'
+  post_message "File purger failed: #{exception.message}", channel: @admin, icon_emoji: ':scream:'
   raise exception
 end
 
