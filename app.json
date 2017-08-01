@@ -1,0 +1,36 @@
+{
+  "name": "Slack File Purger",
+  "description": "A lightweight script to delete stale files in Slack using Heroku Scheduler",
+  "repository": "https://github.com/omscs-study/file-purger",
+  "logo": "https://raw.githubusercontent.com/omscs-study/file-purger/master/logo.png",
+  "keywords": ["ruby", "script", "slack"],
+
+  "addons": [
+    "scheduler"
+  ],
+
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+
+  "env": {
+    "SLACK_TOKEN": {
+      "description": "Slack (legacy) API token",
+      "required": true
+    },
+    "DAYS_TO_KEEP": {
+      "description": "Threshold days to keep files",
+      "required": false
+    },
+    "ADMIN_CHANNEL": {
+      "description": "Channel to notify if there are any errors",
+      "required": false
+    },
+    "GENERAL_CHANNEL": {
+      "description": "Channel to notify when the script is run",
+      "required": false
+    }
+  }
+}
