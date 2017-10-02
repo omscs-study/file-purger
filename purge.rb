@@ -60,7 +60,7 @@ def call
   deleted_file_ids = delete_files(file_ids)
   log.info 'Done!'
   post_message "Deleted #{deleted_file_ids.length} files _(shared more than #{@days} days ago)_", channel: @general, icon_emoji: ':smile:' if deleted_file_ids.length > 0
-  post_message "_NOTE: I can't delete_ *private* _files. Please make sure you delete your private files for the benefit of the whole group. Thanks!_", channel: @general, icon_emoji: ':smile:'
+  post_message "_NOTE: I can't delete_ *private* _files. Please make sure you delete your private files (posted in direct messages and private channels) for the benefit of the whole group. Thanks!_", channel: @general, icon_emoji: ':smile:'
 rescue => exception
   post_message "File purger failed: #{exception.message}", channel: @admin, icon_emoji: ':scream:'
   raise exception
